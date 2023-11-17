@@ -1,23 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import Points from "./Points";
+import "./App.css";
+import Info from "./Info";
+import Result from "./Result";
+import { useState } from "react";
 
 function App() {
+  const [pointed, setPoint] = useState(null);
+  const handleClick = (pointed) => {
+    console.log(`selected ${pointed}`);
+    setPoint(pointed);
+  };
+  const [result, setResult] = useState(false);
+  const changeResult = () => {
+    setResult(!result);
+  };
+  const heading = "How did we do?";
+  const desc =
+    "Please let us know how we did with your support request. All feedback is appreciated to help us improve our offering!";
+  const title = "Thank you!";
+  const appreciate =
+    "We appreciate you taking the time to give a rating. If you ever need more support, don’t hesitate to get in touch!";
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {result ? (
+        <Result title={title} description={appreciate} point={pointed} />
+      ) : (
+        <div>
+          <Info heading={heading} description={desc} />
+          <Points pointed={pointed} click={handleClick} />
+          <button className="submit-btn" onClick={changeResult}>
+            SUBMIT
+          </button>
+        </div>
+      )}
     </div>
   );
 }
